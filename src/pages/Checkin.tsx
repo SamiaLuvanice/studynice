@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Plus, Target, Loader2, Calendar } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { QuickCheckin } from '@/components/checkin/QuickCheckin';
 import { DailyProgress } from '@/components/dashboard/DailyProgress';
@@ -18,6 +19,7 @@ interface Goal {
 
 export default function Checkin() {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const [goals, setGoals] = useState<Goal[]>([]);
   const [loading, setLoading] = useState(true);
   const today = getTodayDate();
@@ -129,14 +131,14 @@ export default function Checkin() {
           <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10">
             <Target className="h-10 w-10 text-primary" />
           </div>
-          <h2 className="mt-6 text-xl font-bold text-foreground">No active goals</h2>
+          <h2 className="mt-6 text-xl font-bold text-foreground">{t('checkin.noActiveGoals')}</h2>
           <p className="mt-2 max-w-sm text-muted-foreground">
-            Create a goal to start logging your study time.
+            {t('checkin.noActiveGoalsDesc')}
           </p>
           <Button asChild className="mt-6">
             <Link to="/goals/new">
               <Plus className="mr-2 h-4 w-4" />
-              Create Goal
+              {t('goals.create')}
             </Link>
           </Button>
         </div>
@@ -150,7 +152,7 @@ export default function Checkin() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Check In</h1>
+            <h1 className="text-2xl font-bold text-foreground">{t('checkin.title')}</h1>
             <div className="flex items-center gap-2 text-muted-foreground">
               <Calendar className="h-4 w-4" />
               <span>{formatDate(today)}</span>
@@ -161,14 +163,14 @@ export default function Checkin() {
         {/* Overall Progress */}
         <div className="rounded-2xl border border-border bg-card p-6">
           <h2 className="mb-4 text-lg font-semibold text-foreground text-center">
-            Today's Total
+            {t('checkin.todayTotal')}
           </h2>
           <DailyProgress currentMinutes={totalMinutes} targetMinutes={totalTarget} />
         </div>
 
         {/* Goals Check-in */}
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-foreground">Log Study Time</h2>
+          <h2 className="text-lg font-semibold text-foreground">{t('checkin.logTime')}</h2>
           {goals.map((goal) => (
             <QuickCheckin
               key={goal.id}

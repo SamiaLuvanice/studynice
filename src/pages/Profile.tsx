@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { User, Mail, Trophy, Clock, Target, Flame, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { StatCard } from '@/components/ui/stat-card';
 import { Button } from '@/components/ui/button';
@@ -25,6 +26,7 @@ interface Stats {
 
 export default function Profile() {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [profile, setProfile] = useState<ProfileData>({ fullName: '', avatarUrl: '' });
@@ -98,10 +100,10 @@ export default function Profile() {
         .eq('id', user.id);
 
       if (error) throw error;
-      toast.success('Profile updated!');
+      toast.success(t('profile.updated'));
     } catch (error) {
       console.error('Error updating profile:', error);
-      toast.error('Failed to update profile');
+      toast.error(t('common.error'));
     } finally {
       setSaving(false);
     }
@@ -130,18 +132,18 @@ export default function Profile() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Profile</h1>
-            <p className="text-muted-foreground">Manage your account</p>
+            <h1 className="text-2xl font-bold text-foreground">{t('profile.title')}</h1>
+            <p className="text-muted-foreground">{t('profile.stats')}</p>
           </div>
           <StreakBadge streak={stats.currentStreak} size="lg" />
         </div>
 
         {/* Profile Info */}
         <div className="rounded-2xl border border-border bg-card p-6 space-y-4">
-          <h2 className="text-lg font-semibold text-foreground">Your Information</h2>
+          <h2 className="text-lg font-semibold text-foreground">{t('profile.title')}</h2>
           
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t('profile.email')}</Label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
@@ -155,12 +157,12 @@ export default function Profile() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="fullName">Full Name</Label>
+            <Label htmlFor="fullName">{t('profile.fullName')}</Label>
             <div className="relative">
               <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 id="fullName"
-                placeholder="Your name"
+                placeholder={t('profile.fullNamePlaceholder')}
                 className="pl-10"
                 value={profile.fullName}
                 onChange={(e) => setProfile({ ...profile, fullName: e.target.value })}
@@ -169,45 +171,36 @@ export default function Profile() {
           </div>
 
           <Button onClick={handleSave} disabled={saving} className="w-full">
-            {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Save Changes'}
+            {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : t('profile.save')}
           </Button>
         </div>
 
         {/* Stats */}
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-foreground">Your Stats</h2>
+          <h2 className="text-lg font-semibold text-foreground">{t('profile.stats')}</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             <StatCard
-              title="Current Streak"
-              value={`${stats.currentStreak} days`}
+              title={t('dashboard.currentStreak')}
+              value={`${stats.currentStreak} ${stats.currentStreak === 1 ? t('dashboard.day') : t('dashboard.days')}`}
               icon={<Flame className="h-5 w-5" />}
               variant="streak"
             />
             <StatCard
-              title="Best Streak"
-              value={`${stats.bestStreak} days`}
+              title={t('dashboard.bestStreak')}
+              value={`${stats.bestStreak} ${stats.bestStreak === 1 ? t('dashboard.day') : t('dashboard.days')}`}
               icon={<Trophy className="h-5 w-5" />}
               variant="primary"
             />
             <StatCard
-              title="Total Study Time"
+              title={t('dashboard.totalMinutes')}
               value={formatTime(stats.totalMinutes)}
               icon={<Clock className="h-5 w-5" />}
             />
             <StatCard
-              title="Days Completed"
+              title={t('dashboard.daysCompleted')}
               value={stats.totalDaysCompleted}
               icon={<Target className="h-5 w-5" />}
             />
-          </div>
-        </div>
-
-        {/* Account Info */}
-        <div className="rounded-2xl border border-border bg-card p-6">
-          <h2 className="mb-4 text-lg font-semibold text-foreground">Account</h2>
-          <div className="space-y-2 text-sm text-muted-foreground">
-            <p>Total goals created: {stats.totalGoals}</p>
-            <p>Member since: {user?.created_at ? new Date(user.created_at).toLocaleDateString() : 'N/A'}</p>
           </div>
         </div>
       </div>

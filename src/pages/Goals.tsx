@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Plus, Target, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { GoalCard } from '@/components/goals/GoalCard';
 import { Button } from '@/components/ui/button';
@@ -20,6 +21,7 @@ interface Goal {
 
 export default function Goals() {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const [goals, setGoals] = useState<Goal[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -66,7 +68,7 @@ export default function Goals() {
       setGoals(goalsWithProgress);
     } catch (error) {
       console.error('Error fetching goals:', error);
-      toast.error('Failed to load goals');
+      toast.error(t('common.error'));
     } finally {
       setLoading(false);
     }
@@ -77,10 +79,10 @@ export default function Goals() {
       const { error } = await supabase.from('goals').delete().eq('id', id);
       if (error) throw error;
       setGoals(goals.filter((g) => g.id !== id));
-      toast.success('Goal deleted');
+      toast.success(t('goals.deleted'));
     } catch (error) {
       console.error('Error deleting goal:', error);
-      toast.error('Failed to delete goal');
+      toast.error(t('common.error'));
     }
   };
 
@@ -100,15 +102,15 @@ export default function Goals() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">My Goals</h1>
+            <h1 className="text-2xl font-bold text-foreground">{t('goals.title')}</h1>
             <p className="text-muted-foreground">
-              {goals.length} goal{goals.length !== 1 ? 's' : ''}
+              {goals.length} {goals.length !== 1 ? 'goals' : 'goal'}
             </p>
           </div>
           <Button asChild>
             <Link to="/goals/new">
               <Plus className="mr-2 h-4 w-4" />
-              New Goal
+              {t('goals.create')}
             </Link>
           </Button>
         </div>
@@ -119,14 +121,14 @@ export default function Goals() {
             <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10">
               <Target className="h-10 w-10 text-primary" />
             </div>
-            <h2 className="mt-6 text-xl font-bold text-foreground">No goals yet</h2>
+            <h2 className="mt-6 text-xl font-bold text-foreground">{t('goals.noGoals')}</h2>
             <p className="mt-2 max-w-sm text-muted-foreground">
-              Create your first study goal to start tracking your progress.
+              {t('goals.noGoalsDesc')}
             </p>
             <Button asChild className="mt-6">
               <Link to="/goals/new">
                 <Plus className="mr-2 h-4 w-4" />
-                Create Goal
+                {t('goals.create')}
               </Link>
             </Button>
           </div>
