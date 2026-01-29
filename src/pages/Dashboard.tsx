@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Plus, Target, Clock, Trophy, Flame, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { StatCard } from '@/components/ui/stat-card';
 import { DailyProgress } from '@/components/dashboard/DailyProgress';
@@ -24,6 +25,7 @@ interface DashboardData {
 
 export default function Dashboard() {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<DashboardData>({
     todayMinutes: 0,
@@ -127,14 +129,14 @@ export default function Dashboard() {
           <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10">
             <Target className="h-10 w-10 text-primary" />
           </div>
-          <h2 className="mt-6 text-2xl font-bold text-foreground">No goals yet</h2>
+          <h2 className="mt-6 text-2xl font-bold text-foreground">{t('dashboard.noGoals')}</h2>
           <p className="mt-2 max-w-sm text-muted-foreground">
-            Create your first study goal to start tracking your progress and building streaks!
+            {t('dashboard.createGoal')}
           </p>
           <Button asChild className="mt-6">
             <Link to="/goals/new">
               <Plus className="mr-2 h-4 w-4" />
-              Create Your First Goal
+              {t('goals.create')}
             </Link>
           </Button>
         </div>
@@ -148,8 +150,8 @@ export default function Dashboard() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
-            <p className="text-muted-foreground">Track your daily progress</p>
+            <h1 className="text-2xl font-bold text-foreground">{t('dashboard.title')}</h1>
+            <p className="text-muted-foreground">{t('dashboard.todayProgress')}</p>
           </div>
           <StreakBadge streak={data.currentStreak} size="lg" />
         </div>
@@ -157,7 +159,7 @@ export default function Dashboard() {
         {/* Today's Progress */}
         <div className="grid gap-6 md:grid-cols-2">
           <div className="rounded-2xl border border-border bg-card p-6">
-            <h2 className="mb-4 text-lg font-semibold text-foreground">Today's Progress</h2>
+            <h2 className="mb-4 text-lg font-semibold text-foreground">{t('dashboard.todayProgress')}</h2>
             <DailyProgress
               currentMinutes={data.todayMinutes}
               targetMinutes={data.todayTarget}
@@ -166,7 +168,7 @@ export default function Dashboard() {
               <Button asChild>
                 <Link to="/checkin">
                   <Plus className="mr-2 h-4 w-4" />
-                  Log Study Time
+                  {t('checkin.logTime')}
                 </Link>
               </Button>
             </div>
@@ -175,27 +177,25 @@ export default function Dashboard() {
           {/* Stats Grid */}
           <div className="grid gap-4 sm:grid-cols-2">
             <StatCard
-              title="Current Streak"
-              value={`${data.currentStreak} days`}
+              title={t('dashboard.currentStreak')}
+              value={`${data.currentStreak} ${data.currentStreak === 1 ? t('dashboard.day') : t('dashboard.days')}`}
               icon={<Flame className="h-5 w-5" />}
               variant="streak"
             />
             <StatCard
-              title="Best Streak"
-              value={`${data.bestStreak} days`}
+              title={t('dashboard.bestStreak')}
+              value={`${data.bestStreak} ${data.bestStreak === 1 ? t('dashboard.day') : t('dashboard.days')}`}
               icon={<Trophy className="h-5 w-5" />}
               variant="primary"
             />
             <StatCard
-              title="Total Minutes"
+              title={t('dashboard.totalMinutes')}
               value={data.totalMinutes.toLocaleString()}
-              subtitle="All time"
               icon={<Clock className="h-5 w-5" />}
             />
             <StatCard
-              title="Days Completed"
+              title={t('dashboard.daysCompleted')}
               value={data.totalDaysCompleted}
-              subtitle="Goals met"
               icon={<Target className="h-5 w-5" />}
             />
           </div>
@@ -203,7 +203,7 @@ export default function Dashboard() {
 
         {/* Weekly Chart */}
         <div className="rounded-2xl border border-border bg-card p-6">
-          <h2 className="mb-4 text-lg font-semibold text-foreground">Last 7 Days</h2>
+          <h2 className="mb-4 text-lg font-semibold text-foreground">{t('dashboard.weeklyOverview')}</h2>
           <WeeklyChart data={data.weeklyData} />
         </div>
       </div>

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -31,6 +32,7 @@ const categories = [
 
 export default function GoalForm() {
   const { user } = useAuth();
+  const { t, language } = useLanguage();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const isEditing = Boolean(id);
@@ -61,7 +63,7 @@ export default function GoalForm() {
 
       if (error) throw error;
       if (!data) {
-        toast.error('Goal not found');
+        toast.error(t('common.error'));
         navigate('/goals');
         return;
       }
@@ -74,7 +76,7 @@ export default function GoalForm() {
       });
     } catch (error) {
       console.error('Error fetching goal:', error);
-      toast.error('Failed to load goal');
+      toast.error(t('common.error'));
       navigate('/goals');
     } finally {
       setLoading(false);
@@ -101,17 +103,17 @@ export default function GoalForm() {
           .update(goalData)
           .eq('id', id);
         if (error) throw error;
-        toast.success('Goal updated!');
+        toast.success(t('goals.updated'));
       } else {
         const { error } = await supabase.from('goals').insert(goalData);
         if (error) throw error;
-        toast.success('Goal created!');
+        toast.success(t('goals.created'));
       }
 
       navigate('/goals');
     } catch (error) {
       console.error('Error saving goal:', error);
-      toast.error('Failed to save goal');
+      toast.error(t('common.error'));
     } finally {
       setSubmitting(false);
     }
@@ -141,10 +143,13 @@ export default function GoalForm() {
           </Button>
           <div>
             <h1 className="text-2xl font-bold text-foreground">
-              {isEditing ? 'Edit Goal' : 'New Goal'}
+              {isEditing ? t('goals.edit') : t('goals.create')}
             </h1>
             <p className="text-muted-foreground">
-              {isEditing ? 'Update your study goal' : 'Create a new study goal'}
+              {isEditing 
+                ? (language === 'en' ? 'Update your study goal' : 'Atualize sua meta de estudo')
+                : (language === 'en' ? 'Create a new study goal' : 'Crie uma nova meta de estudo')
+              }
             </p>
           </div>
         </div>
@@ -153,10 +158,10 @@ export default function GoalForm() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="rounded-2xl border border-border bg-card p-6 space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="title">Goal Title</Label>
+              <Label htmlFor="title">{t('goals.form.title')}</Label>
               <Input
                 id="title"
-                placeholder="e.g., Learn Spanish"
+                placeholder={t('goals.form.titlePlaceholder')}
                 value={formData.title}
                 onChange={(e) =>
                   setFormData({ ...formData, title: e.target.value })
@@ -166,7 +171,7 @@ export default function GoalForm() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="target">Daily Target (minutes)</Label>
+              <Label htmlFor="target">{t('goals.form.dailyTarget')}</Label>
               <Input
                 id="target"
                 type="number"
@@ -182,12 +187,15 @@ export default function GoalForm() {
                 required
               />
               <p className="text-xs text-muted-foreground">
-                Recommended: 30-60 minutes for sustainable habits
+                {language === 'en' 
+                  ? 'Recommended: 30-60 minutes for sustainable habits'
+                  : 'Recomendado: 30-60 minutos para hábitos sustentáveis'
+                }
               </p>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="category">Category (optional)</Label>
+              <Label htmlFor="category">{t('goals.form.category')}</Label>
               <Select
                 value={formData.category}
                 onValueChange={(value) =>
@@ -195,7 +203,7 @@ export default function GoalForm() {
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select a category" />
+                  <SelectValue placeholder={t('goals.form.categoryPlaceholder')} />
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map((cat) => (
@@ -210,10 +218,13 @@ export default function GoalForm() {
             <div className="flex items-center justify-between rounded-lg border border-border p-4">
               <div>
                 <Label htmlFor="active" className="font-medium">
-                  Active Goal
+                  {t('goals.form.isActive')}
                 </Label>
                 <p className="text-sm text-muted-foreground">
-                  Inactive goals won't count towards your daily target
+                  {language === 'en'
+                    ? "Inactive goals won't count towards your daily target"
+                    : 'Metas inativas não contam para sua meta diária'
+                  }
                 </p>
               </div>
               <Switch
@@ -233,15 +244,13 @@ export default function GoalForm() {
               className="flex-1"
               onClick={() => navigate('/goals')}
             >
-              Cancel
+              {t('goals.form.cancel')}
             </Button>
             <Button type="submit" className="flex-1" disabled={submitting}>
               {submitting ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
-              ) : isEditing ? (
-                'Update Goal'
               ) : (
-                'Create Goal'
+                t('goals.form.save')
               )}
             </Button>
           </div>

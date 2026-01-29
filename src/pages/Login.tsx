@@ -1,14 +1,19 @@
 import { useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
-import { Flame, Mail, Lock, User, Loader2 } from 'lucide-react';
+import { Navigate } from 'react-router-dom';
+import { Mail, Lock, User, Loader2, Moon, Sun, Globe } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { useTheme } from '@/contexts/ThemeContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { OwlLogo } from '@/components/brand/OwlLogo';
 import { toast } from 'sonner';
 
 export default function Login() {
   const { user, loading, signIn, signUp, signInWithGoogle } = useAuth();
+  const { theme, toggleTheme } = useTheme();
+  const { language, setLanguage, t } = useLanguage();
   const [isSignUp, setIsSignUp] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -17,9 +22,13 @@ export default function Login() {
     fullName: '',
   });
 
+  const toggleLanguage = () => {
+    setLanguage(language === 'en' ? 'pt-BR' : 'en');
+  };
+
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center bg-background">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
@@ -39,7 +48,7 @@ export default function Login() {
         if (error) {
           toast.error(error.message);
         } else {
-          toast.success('Account created! You can now sign in.');
+          toast.success(language === 'en' ? 'Account created! You can now sign in.' : 'Conta criada! Você já pode entrar.');
         }
       } else {
         const { error } = await signIn(formData.email, formData.password);
@@ -61,15 +70,36 @@ export default function Login() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
+      {/* Theme and Language controls */}
+      <div className="absolute top-4 right-4 flex items-center gap-2">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={toggleLanguage}
+          className="text-muted-foreground hover:text-foreground gap-1.5"
+        >
+          <Globe className="h-4 w-4" />
+          <span className="text-xs font-medium">{language === 'en' ? 'EN' : 'PT'}</span>
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={toggleTheme}
+          className="text-muted-foreground hover:text-foreground"
+        >
+          {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+        </Button>
+      </div>
+
       <div className="w-full max-w-md space-y-8">
         {/* Logo */}
         <div className="flex flex-col items-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-primary shadow-glow-primary">
-            <Flame className="h-9 w-9 text-primary-foreground" />
+          <div className="flex h-20 w-20 items-center justify-center">
+            <OwlLogo size={72} />
           </div>
           <h1 className="mt-4 text-3xl font-bold text-foreground">StudyNice</h1>
           <p className="mt-2 text-center text-muted-foreground">
-            Build consistent study habits and track your progress
+            {t('auth.tagline')}
           </p>
         </div>
 
@@ -78,13 +108,13 @@ export default function Login() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {isSignUp && (
               <div className="space-y-2">
-                <Label htmlFor="fullName">Full Name</Label>
+                <Label htmlFor="fullName">{t('profile.fullName')}</Label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     id="fullName"
                     type="text"
-                    placeholder="John Doe"
+                    placeholder={t('profile.fullNamePlaceholder')}
                     className="pl-10"
                     value={formData.fullName}
                     onChange={(e) =>
@@ -96,13 +126,13 @@ export default function Login() {
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t('auth.email')}</Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   id="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder={t('auth.emailPlaceholder')}
                   className="pl-10"
                   required
                   value={formData.email}
@@ -114,13 +144,13 @@ export default function Login() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t('auth.password')}</Label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   id="password"
                   type="password"
-                  placeholder="••••••••"
+                  placeholder={t('auth.passwordPlaceholder')}
                   className="pl-10"
                   required
                   minLength={6}
@@ -136,9 +166,9 @@ export default function Login() {
               {isSubmitting ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : isSignUp ? (
-                'Create Account'
+                t('auth.signup')
               ) : (
-                'Sign In'
+                t('auth.login')
               )}
             </Button>
           </form>
@@ -148,7 +178,9 @@ export default function Login() {
               <div className="w-full border-t border-border" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
+              <span className="bg-card px-2 text-muted-foreground">
+                {language === 'en' ? 'Or continue with' : 'Ou continue com'}
+              </span>
             </div>
           </div>
 
@@ -179,13 +211,13 @@ export default function Login() {
           </Button>
 
           <p className="mt-6 text-center text-sm text-muted-foreground">
-            {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
+            {isSignUp ? t('auth.hasAccount') : t('auth.noAccount')}{' '}
             <button
               type="button"
               className="font-medium text-primary hover:underline"
               onClick={() => setIsSignUp(!isSignUp)}
             >
-              {isSignUp ? 'Sign in' : 'Sign up'}
+              {isSignUp ? t('auth.login') : t('auth.signup')}
             </button>
           </p>
         </div>
