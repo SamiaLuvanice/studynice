@@ -25,7 +25,7 @@ export function StatCard({
           </p>
           {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
         </div>
-        {icon && <div className={cn("flex h-10 w-10 items-center justify-center rounded-xl bg-pink-50/0", variant === 'primary' && "bg-primary/10 text-primary", variant === 'streak' && "bg-streak/10 text-streak", variant === 'default' && "bg-secondary text-muted-foreground")}>
+        {icon && <div className={cn("flex h-10 w-10 items-center justify-center rounded-xl bg-sidebar", variant === 'primary' && "bg-primary/10 text-primary", variant === 'streak' && "bg-streak/10 text-streak", variant === 'default' && "bg-secondary text-muted-foreground")}>
             {icon}
           </div>}
       </div>
