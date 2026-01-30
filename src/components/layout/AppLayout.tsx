@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Home, Target, CheckSquare, User, LogOut, Moon, Sun, Globe } from 'lucide-react';
+import { Home, Target, CheckSquare, User, LogOut, Moon, Sun, Globe, Clock } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -15,6 +15,7 @@ interface AppLayoutProps {
 const navItemsConfig = [
   { path: '/dashboard', labelKey: 'nav.dashboard' as const, icon: Home },
   { path: '/goals', labelKey: 'nav.goals' as const, icon: Target },
+  { path: '/timer', labelKey: 'nav.timer' as const, icon: Clock },
   { path: '/checkin', labelKey: 'nav.checkin' as const, icon: CheckSquare },
   { path: '/profile', labelKey: 'nav.profile' as const, icon: User },
 ];

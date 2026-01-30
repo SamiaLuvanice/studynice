@@ -15,6 +15,7 @@ import Dashboard from "./pages/Dashboard";
 import Goals from "./pages/Goals";
 import GoalForm from "./pages/GoalForm";
 import Checkin from "./pages/Checkin";
+import Timer from "./pages/Timer";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
@@ -81,6 +82,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <Checkin />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/timer"
+        element={
+          <ProtectedRoute>
+            <Timer />
           </ProtectedRoute>
         }
       />
