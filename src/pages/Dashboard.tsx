@@ -11,7 +11,6 @@ import { StreakBadge } from '@/components/dashboard/StreakBadge';
 import { WeeklyChart } from '@/components/charts/WeeklyChart';
 import { Button } from '@/components/ui/button';
 import { getTodayDate, getLastNDays } from '@/lib/supabase-helpers';
-
 interface DashboardData {
   todayMinutes: number;
   todayTarget: number;
@@ -19,13 +18,20 @@ interface DashboardData {
   bestStreak: number;
   totalMinutes: number;
   totalDaysCompleted: number;
-  weeklyData: Array<{ date: string; minutes: number; target: number }>;
+  weeklyData: Array<{
+    date: string;
+    minutes: number;
+    target: number;
+  }>;
   hasGoals: boolean;
 }
-
 export default function Dashboard() {
-  const { user } = useAuth();
-  const { t } = useLanguage();
+  const {
+    user
+  } = useAuth();
+  const {
+    t
+  } = useLanguage();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<DashboardData>({
     todayMinutes: 0,
@@ -35,65 +41,38 @@ export default function Dashboard() {
     totalMinutes: 0,
     totalDaysCompleted: 0,
     weeklyData: [],
-    hasGoals: false,
+    hasGoals: false
   });
-
   useEffect(() => {
     if (user) {
       fetchDashboardData();
     }
   }, [user]);
-
   const fetchDashboardData = async () => {
     if (!user) return;
-
     try {
       const today = getTodayDate();
       const last7Days = getLastNDays(7);
 
       // Fetch all data in parallel
-      const [goalsRes, todayCheckinsRes, userStatsRes, weeklyStatsRes] = await Promise.all([
-        supabase
-          .from('goals')
-          .select('id, daily_target_minutes')
-          .eq('user_id', user.id)
-          .eq('is_active', true),
-        supabase
-          .from('checkins')
-          .select('minutes_studied')
-          .eq('user_id', user.id)
-          .eq('checkin_date', today),
-        supabase
-          .from('user_stats')
-          .select('*')
-          .eq('user_id', user.id)
-          .maybeSingle(),
-        supabase
-          .from('daily_stats')
-          .select('*')
-          .eq('user_id', user.id)
-          .gte('stat_date', last7Days[0])
-          .order('stat_date', { ascending: true }),
-      ]);
-
+      const [goalsRes, todayCheckinsRes, userStatsRes, weeklyStatsRes] = await Promise.all([supabase.from('goals').select('id, daily_target_minutes').eq('user_id', user.id).eq('is_active', true), supabase.from('checkins').select('minutes_studied').eq('user_id', user.id).eq('checkin_date', today), supabase.from('user_stats').select('*').eq('user_id', user.id).maybeSingle(), supabase.from('daily_stats').select('*').eq('user_id', user.id).gte('stat_date', last7Days[0]).order('stat_date', {
+        ascending: true
+      })]);
       const goals = goalsRes.data || [];
       const todayTarget = goals.reduce((sum, g) => sum + g.daily_target_minutes, 0);
       const todayMinutes = todayCheckinsRes.data?.reduce((sum, c) => sum + c.minutes_studied, 0) || 0;
       const userStats = userStatsRes.data;
 
       // Build weekly data
-      const weeklyMap = new Map(
-        (weeklyStatsRes.data || []).map((s) => [s.stat_date, s])
-      );
-      const weeklyData = last7Days.map((date) => {
+      const weeklyMap = new Map((weeklyStatsRes.data || []).map(s => [s.stat_date, s]));
+      const weeklyData = last7Days.map(date => {
         const stat = weeklyMap.get(date);
         return {
           date,
           minutes: stat?.total_minutes || 0,
-          target: stat?.target_minutes || todayTarget,
+          target: stat?.target_minutes || todayTarget
         };
       });
-
       setData({
         todayMinutes,
         todayTarget,
@@ -102,7 +81,7 @@ export default function Dashboard() {
         totalMinutes: userStats?.total_minutes || 0,
         totalDaysCompleted: userStats?.total_days_completed || 0,
         weeklyData,
-        hasGoals: goals.length > 0,
+        hasGoals: goals.length > 0
       });
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
@@ -110,21 +89,17 @@ export default function Dashboard() {
       setLoading(false);
     }
   };
-
   if (loading) {
-    return (
-      <AppLayout>
+    return <AppLayout>
         <div className="flex items-center justify-center py-20">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
-      </AppLayout>
-    );
+      </AppLayout>;
   }
 
   // Empty state
   if (!data.hasGoals) {
-    return (
-      <AppLayout>
+    return <AppLayout>
         <div className="flex flex-col items-center justify-center py-20 text-center">
           <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10">
             <Target className="h-10 w-10 text-primary" />
@@ -140,12 +115,9 @@ export default function Dashboard() {
             </Link>
           </Button>
         </div>
-      </AppLayout>
-    );
+      </AppLayout>;
   }
-
-  return (
-    <AppLayout>
+  return <AppLayout>
       <div className="space-y-6 animate-fade-in">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -160,10 +132,7 @@ export default function Dashboard() {
         <div className="grid gap-6 md:grid-cols-2">
           <div className="rounded-2xl border border-border bg-card p-6">
             <h2 className="mb-4 text-lg font-semibold text-foreground">{t('dashboard.todayProgress')}</h2>
-            <DailyProgress
-              currentMinutes={data.todayMinutes}
-              targetMinutes={data.todayTarget}
-            />
+            <DailyProgress currentMinutes={data.todayMinutes} targetMinutes={data.todayTarget} />
             <div className="mt-4 flex justify-center">
               <Button asChild>
                 <Link to="/checkin">
@@ -176,28 +145,10 @@ export default function Dashboard() {
 
           {/* Stats Grid */}
           <div className="grid gap-4 sm:grid-cols-2">
-            <StatCard
-              title={t('dashboard.currentStreak')}
-              value={`${data.currentStreak} ${data.currentStreak === 1 ? t('dashboard.day') : t('dashboard.days')}`}
-              icon={<Flame className="h-5 w-5" />}
-              variant="streak"
-            />
-            <StatCard
-              title={t('dashboard.bestStreak')}
-              value={`${data.bestStreak} ${data.bestStreak === 1 ? t('dashboard.day') : t('dashboard.days')}`}
-              icon={<Trophy className="h-5 w-5" />}
-              variant="primary"
-            />
-            <StatCard
-              title={t('dashboard.totalMinutes')}
-              value={data.totalMinutes.toLocaleString()}
-              icon={<Clock className="h-5 w-5" />}
-            />
-            <StatCard
-              title={t('dashboard.daysCompleted')}
-              value={data.totalDaysCompleted}
-              icon={<Target className="h-5 w-5" />}
-            />
+            <StatCard title={t('dashboard.currentStreak')} value={`${data.currentStreak} ${data.currentStreak === 1 ? t('dashboard.day') : t('dashboard.days')}`} icon={<Flame className="h-5 w-5" />} variant="streak" />
+            <StatCard title={t('dashboard.bestStreak')} value={`${data.bestStreak} ${data.bestStreak === 1 ? t('dashboard.day') : t('dashboard.days')}`} icon={<Trophy className="h-5 w-5" />} variant="primary" />
+            <StatCard title={t('dashboard.totalMinutes')} value={data.totalMinutes.toLocaleString()} icon={<Clock className="h-5 w-5 bg-warning-foreground" />} />
+            <StatCard title={t('dashboard.daysCompleted')} value={data.totalDaysCompleted} icon={<Target className="h-5 w-5" />} />
           </div>
         </div>
 
@@ -207,6 +158,5 @@ export default function Dashboard() {
           <WeeklyChart data={data.weeklyData} />
         </div>
       </div>
-    </AppLayout>
-  );
+    </AppLayout>;
 }
