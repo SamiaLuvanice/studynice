@@ -1,4 +1,5 @@
 import { ProgressRing } from '@/components/ui/progress-ring';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils';
 
 interface DailyProgressProps {
@@ -12,10 +13,13 @@ export function DailyProgress({
   targetMinutes,
   className,
 }: DailyProgressProps) {
+  const { t } = useLanguage();
   const progress = targetMinutes > 0 
     ? Math.min((currentMinutes / targetMinutes) * 100, 100) 
     : 0;
   const isCompleted = currentMinutes >= targetMinutes && targetMinutes > 0;
+
+  const remaining = targetMinutes - currentMinutes;
 
   return (
     <div className={cn("flex flex-col items-center", className)}>
@@ -30,15 +34,15 @@ export function DailyProgress({
             {currentMinutes}
           </p>
           <p className="text-sm text-muted-foreground">
-            of {targetMinutes} min
+            {t('dashboard.ofMinutes').replace('{target}', String(targetMinutes))}
           </p>
         </div>
       </ProgressRing>
       <p className="mt-4 text-sm font-medium text-muted-foreground">
         {isCompleted ? (
-          <span className="text-primary">🎉 Goal completed!</span>
+          <span className="text-primary">{t('dashboard.goalCompleted')}</span>
         ) : (
-          `${targetMinutes - currentMinutes} min to go`
+          t('dashboard.minToGo').replace('{remaining}', String(remaining))
         )}
       </p>
     </div>

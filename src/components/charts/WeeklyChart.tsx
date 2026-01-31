@@ -9,6 +9,7 @@ import {
   ResponsiveContainer,
   Cell,
 } from 'recharts';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface WeeklyChartProps {
   data: Array<{
@@ -19,13 +20,16 @@ interface WeeklyChartProps {
 }
 
 export function WeeklyChart({ data }: WeeklyChartProps) {
+  const { language, t } = useLanguage();
+  
   const chartData = useMemo(() => {
+    const locale = language === 'pt-BR' ? 'pt-BR' : 'en-US';
     return data.map((item) => ({
       ...item,
-      day: new Date(item.date).toLocaleDateString('en-US', { weekday: 'short' }),
+      day: new Date(item.date).toLocaleDateString(locale, { weekday: 'short' }),
       completed: item.minutes >= item.target,
     }));
-  }, [data]);
+  }, [data, language]);
 
   return (
     <div className="h-[200px] w-full">
@@ -47,18 +51,18 @@ export function WeeklyChart({ data }: WeeklyChartProps) {
           <Tooltip
             content={({ active, payload }) => {
               if (active && payload && payload.length) {
-                const data = payload[0].payload;
+                const chartItem = payload[0].payload;
                 return (
                   <div className="rounded-lg border bg-card p-3 shadow-lg">
                     <p className="text-sm font-medium text-foreground">
-                      {data.minutes} minutes
+                      {chartItem.minutes} {t('dashboard.minutes')}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      Target: {data.target} min
+                      {t('dashboard.target')}: {chartItem.target} min
                     </p>
-                    {data.completed && (
+                    {chartItem.completed && (
                       <p className="text-xs text-primary font-medium mt-1">
-                        ✓ Completed
+                        ✓ {t('dashboard.completed')}
                       </p>
                     )}
                   </div>

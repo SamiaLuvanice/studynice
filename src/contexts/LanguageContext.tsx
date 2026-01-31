@@ -25,6 +25,11 @@ const translations = {
     'dashboard.weeklyOverview': 'Weekly Overview',
     'dashboard.noGoals': 'No active goals yet',
     'dashboard.createGoal': 'Create your first goal to start tracking!',
+    'dashboard.ofMinutes': 'of {target} min',
+    'dashboard.minToGo': '{remaining} min to go',
+    'dashboard.goalCompleted': '🎉 Goal completed!',
+    'dashboard.completed': 'Completed',
+    'dashboard.target': 'Target',
     
     // Goals
     'goals.title': 'My Goals',
@@ -182,6 +187,11 @@ const translations = {
     'dashboard.weeklyOverview': 'Resumo Semanal',
     'dashboard.noGoals': 'Nenhuma meta ativa ainda',
     'dashboard.createGoal': 'Crie sua primeira meta para começar a acompanhar!',
+    'dashboard.ofMinutes': 'de {target} min',
+    'dashboard.minToGo': '{remaining} min restantes',
+    'dashboard.goalCompleted': '🎉 Meta concluída!',
+    'dashboard.completed': 'Concluído',
+    'dashboard.target': 'Meta',
     
     // Goals
     'goals.title': 'Minhas Metas',
