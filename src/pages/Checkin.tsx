@@ -19,7 +19,7 @@ interface Goal {
 
 export default function Checkin() {
   const { user } = useAuth();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [goals, setGoals] = useState<Goal[]>([]);
   const [loading, setLoading] = useState(true);
   const today = getTodayDate();
@@ -155,7 +155,7 @@ export default function Checkin() {
             <h1 className="text-2xl font-bold text-foreground">{t('checkin.title')}</h1>
             <div className="flex items-center gap-2 text-muted-foreground">
               <Calendar className="h-4 w-4" />
-              <span>{formatDate(today)}</span>
+              <span>{formatDate(today, language)}</span>
             </div>
           </div>
         </div>

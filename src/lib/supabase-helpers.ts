@@ -5,9 +5,10 @@ export function getTodayDate(): string {
   return new Date().toISOString().split('T')[0];
 }
 
-// Helper to format date for display
-export function formatDate(date: string): string {
-  return new Date(date).toLocaleDateString('en-US', {
+// Helper to format date for display with locale support
+export function formatDate(date: string, locale: string = 'en'): string {
+  const localeCode = locale === 'pt-BR' ? 'pt-BR' : 'en-US';
+  return new Date(date).toLocaleDateString(localeCode, {
     weekday: 'short',
     month: 'short',
     day: 'numeric',
