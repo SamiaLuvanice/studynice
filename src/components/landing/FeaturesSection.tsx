@@ -47,7 +47,7 @@ export function FeaturesSection() {
             return (
               <Card key={index} className="group hover:shadow-lg transition-shadow duration-300">
                 <CardContent className="p-6">
-                  <div className={`p-3 rounded-xl bg-secondary/50 w-fit mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                  <div className={`p-3 rounded-xl bg-secondary/30 w-fit mb-4 group-hover:scale-110 transition-transform duration-300`}>
                     <Icon className={`h-6 w-6 ${feature.color}`} />
                   </div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">
