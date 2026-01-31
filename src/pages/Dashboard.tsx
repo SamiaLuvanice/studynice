@@ -147,7 +147,7 @@ export default function Dashboard() {
           <div className="grid gap-4 sm:grid-cols-2">
             <StatCard title={t('dashboard.currentStreak')} value={`${data.currentStreak} ${data.currentStreak === 1 ? t('dashboard.day') : t('dashboard.days')}`} icon={<Flame className="h-5 w-5" />} variant="streak" />
             <StatCard title={t('dashboard.bestStreak')} value={`${data.bestStreak} ${data.bestStreak === 1 ? t('dashboard.day') : t('dashboard.days')}`} icon={<Trophy className="h-5 w-5" />} variant="primary" />
-            <StatCard title={t('dashboard.totalMinutes')} value={data.totalMinutes.toLocaleString()} icon={<Clock className="h-5 w-5 bg-warning-foreground" />} />
+            <StatCard title={t('dashboard.totalMinutes')} value={data.totalMinutes.toLocaleString()} icon={<Clock className="h-5 w-5" />} />
             <StatCard title={t('dashboard.daysCompleted')} value={data.totalDaysCompleted} icon={<Target className="h-5 w-5" />} />
           </div>
         </div>
