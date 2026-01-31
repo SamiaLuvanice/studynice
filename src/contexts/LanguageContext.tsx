@@ -120,7 +120,7 @@ const translations = {
     
     // Landing Page
     'landing.heroTitle': 'Build a daily study streak that actually sticks.',
-    'landing.heroSubtitle': 'Track your study goals, build consistent habits, and watch your progress grow with our Duolingo-inspired streak system.',
+    'landing.heroSubtitle': 'Track your study goals, build consistent habits, and watch your progress grow with our motivating streak system.',
     'landing.ctaPrimary': 'Create free account',
     'landing.ctaSecondary': 'See how it works',
     'landing.howItWorks': 'How It Works',
@@ -277,7 +277,7 @@ const translations = {
     
     // Landing Page
     'landing.heroTitle': 'Construa uma sequência de estudos diária que realmente funciona.',
-    'landing.heroSubtitle': 'Acompanhe suas metas de estudo, crie hábitos consistentes e veja seu progresso crescer com nosso sistema de sequências inspirado no Duolingo.',
+    'landing.heroSubtitle': 'Acompanhe suas metas de estudo, crie hábitos consistentes e veja seu progresso crescer com nosso sistema de sequências motivador.',
     'landing.ctaPrimary': 'Criar conta grátis',
     'landing.ctaSecondary': 'Veja como funciona',
     'landing.howItWorks': 'Como Funciona',
