@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Plus, Check } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -29,6 +30,7 @@ export function QuickCheckin({
   targetMinutes,
   onAddMinutes,
 }: QuickCheckinProps) {
+  const { t } = useLanguage();
   const [showCustomDialog, setShowCustomDialog] = useState(false);
   const [customMinutes, setCustomMinutes] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -42,9 +44,12 @@ export function QuickCheckin({
     setAnimatingButton(minutes);
     try {
       await onAddMinutes(goalId, minutes);
-      toast.success(`Added ${minutes} minutes to ${goalTitle}!`);
+      const successMsg = t('checkin.addedSuccess')
+        .replace('{minutes}', String(minutes))
+        .replace('{goal}', goalTitle);
+      toast.success(successMsg);
     } catch (error) {
-      toast.error('Failed to add minutes');
+      toast.error(t('checkin.addFailed'));
     } finally {
       setIsLoading(false);
       setTimeout(() => setAnimatingButton(null), 300);
@@ -54,21 +59,28 @@ export function QuickCheckin({
   const handleCustomAdd = async () => {
     const minutes = parseInt(customMinutes);
     if (isNaN(minutes) || minutes <= 0) {
-      toast.error('Please enter a valid number of minutes');
+      toast.error(t('checkin.invalidMinutes'));
       return;
     }
     setIsLoading(true);
     try {
       await onAddMinutes(goalId, minutes);
-      toast.success(`Added ${minutes} minutes to ${goalTitle}!`);
+      const successMsg = t('checkin.addedSuccess')
+        .replace('{minutes}', String(minutes))
+        .replace('{goal}', goalTitle);
+      toast.success(successMsg);
       setShowCustomDialog(false);
       setCustomMinutes('');
     } catch (error) {
-      toast.error('Failed to add minutes');
+      toast.error(t('checkin.addFailed'));
     } finally {
       setIsLoading(false);
     }
   };
+
+  const minTodayText = t('checkin.minToday')
+    .replace('{current}', String(currentMinutes))
+    .replace('{target}', String(targetMinutes));
 
   return (
     <div className="goal-card animate-slide-up">
@@ -76,7 +88,7 @@ export function QuickCheckin({
         <div>
           <h3 className="font-semibold text-foreground">{goalTitle}</h3>
           <p className="text-sm text-muted-foreground">
-            {currentMinutes} / {targetMinutes} min today
+            {minTodayText}
           </p>
         </div>
         {isCompleted && (
@@ -120,19 +132,19 @@ export function QuickCheckin({
           className="quick-action"
         >
           <Plus className="h-4 w-4" />
-          Custom
+          {t('checkin.custom')}
         </button>
       </div>
 
       <Dialog open={showCustomDialog} onOpenChange={setShowCustomDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Add Custom Minutes</DialogTitle>
+            <DialogTitle>{t('checkin.addMinutes')}</DialogTitle>
           </DialogHeader>
           <div className="py-4">
             <Input
               type="number"
-              placeholder="Enter minutes"
+              placeholder={t('checkin.enterMinutes')}
               value={customMinutes}
               onChange={(e) => setCustomMinutes(e.target.value)}
               min="1"
@@ -141,10 +153,10 @@ export function QuickCheckin({
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowCustomDialog(false)}>
-              Cancel
+              {t('common.cancel')}
             </Button>
             <Button onClick={handleCustomAdd} disabled={isLoading}>
-              Add Minutes
+              {t('checkin.addMinutesBtn')}
             </Button>
           </DialogFooter>
         </DialogContent>

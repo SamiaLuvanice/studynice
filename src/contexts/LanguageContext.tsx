@@ -69,6 +69,13 @@ const translations = {
     'checkin.success': 'Check-in saved!',
     'checkin.target': 'Target',
     'checkin.todayTotal': "Today's Total",
+    'checkin.minToday': '{current} / {target} min today',
+    'checkin.addMinutes': 'Add Custom Minutes',
+    'checkin.enterMinutes': 'Enter minutes',
+    'checkin.addedSuccess': 'Added {minutes} minutes to {goal}!',
+    'checkin.addFailed': 'Failed to add minutes',
+    'checkin.invalidMinutes': 'Please enter a valid number of minutes',
+    'checkin.addMinutesBtn': 'Add Minutes',
     
     // Timer
     'timer.title': 'Study Timer',
@@ -231,6 +238,13 @@ const translations = {
     'checkin.success': 'Check-in salvo!',
     'checkin.target': 'Meta',
     'checkin.todayTotal': 'Total de Hoje',
+    'checkin.minToday': '{current} / {target} min hoje',
+    'checkin.addMinutes': 'Adicionar Minutos Personalizados',
+    'checkin.enterMinutes': 'Digite os minutos',
+    'checkin.addedSuccess': 'Adicionado {minutes} minutos em {goal}!',
+    'checkin.addFailed': 'Falha ao adicionar minutos',
+    'checkin.invalidMinutes': 'Por favor, digite um número válido de minutos',
+    'checkin.addMinutesBtn': 'Adicionar Minutos',
     
     // Timer
     'timer.title': 'Timer de Estudo',
