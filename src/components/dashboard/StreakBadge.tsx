@@ -1,4 +1,5 @@
 import { Flame } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils';
 
 interface StreakBadgeProps {
@@ -8,6 +9,8 @@ interface StreakBadgeProps {
 }
 
 export function StreakBadge({ streak, size = 'md', className }: StreakBadgeProps) {
+  const { t } = useLanguage();
+  
   const sizeClasses = {
     sm: 'text-sm px-2 py-1',
     md: 'text-base px-3 py-1.5',
@@ -20,6 +23,8 @@ export function StreakBadge({ streak, size = 'md', className }: StreakBadgeProps
     lg: 'h-5 w-5',
   };
 
+  const dayLabel = streak === 1 ? t('dashboard.day') : t('dashboard.days');
+
   return (
     <div
       className={cn(
@@ -30,7 +35,7 @@ export function StreakBadge({ streak, size = 'md', className }: StreakBadgeProps
       )}
     >
       <Flame className={cn(iconSizes[size], streak > 0 && "animate-pulse-soft")} />
-      <span>{streak} day{streak !== 1 ? 's' : ''}</span>
+      <span>{streak} {dayLabel}</span>
     </div>
   );
 }
