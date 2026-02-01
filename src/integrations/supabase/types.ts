@@ -144,18 +144,21 @@ export type Database = {
           created_at: string
           full_name: string | null
           id: string
+          timezone: string | null
         }
         Insert: {
           avatar_url?: string | null
           created_at?: string
           full_name?: string | null
           id: string
+          timezone?: string | null
         }
         Update: {
           avatar_url?: string | null
           created_at?: string
           full_name?: string | null
           id?: string
+          timezone?: string | null
         }
         Relationships: []
       }
@@ -250,7 +253,24 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_monthly_calendar_data: {
+        Args: { p_month: number; p_user_id: string; p_year: number }
+        Returns: {
+          goals_count: number
+          is_completed: boolean
+          stat_date: string
+          target_minutes: number
+          total_minutes: number
+        }[]
+      }
+      recalculate_daily_stats: {
+        Args: { p_date: string; p_user_id: string }
+        Returns: undefined
+      }
+      recalculate_user_stats: {
+        Args: { p_user_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
