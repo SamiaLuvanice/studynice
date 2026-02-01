@@ -17,6 +17,7 @@ import GoalForm from "./pages/GoalForm";
 import Checkin from "./pages/Checkin";
 import Timer from "./pages/Timer";
 import Profile from "./pages/Profile";
+import Calendar from "./pages/Calendar";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -90,6 +91,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <Timer />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/calendar"
+        element={
+          <ProtectedRoute>
+            <Calendar />
           </ProtectedRoute>
         }
       />

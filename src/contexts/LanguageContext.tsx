@@ -9,6 +9,18 @@ const translations = {
     'nav.goals': 'Goals',
     'nav.checkin': 'Check In',
     'nav.profile': 'Profile',
+    'nav.calendar': 'Calendar',
+    
+    // Calendar
+    'calendar.subtitle': 'View your study history and log past sessions',
+    'calendar.completed': 'Completed',
+    'calendar.partial': 'Partial',
+    'calendar.noActivity': 'No activity',
+    'calendar.today': 'Today',
+    'calendar.goals': 'goals',
+    'calendar.loggedCheckins': 'Logged Check-ins',
+    'calendar.noCheckins': 'No check-ins on this day',
+    'calendar.addMinutes': 'Add minutes',
     'nav.timer': 'Timer',
     
     // Dashboard
@@ -179,6 +191,18 @@ const translations = {
     'nav.checkin': 'Check-in',
     'nav.profile': 'Perfil',
     'nav.timer': 'Timer',
+    'nav.calendar': 'Calendário',
+    
+    // Calendar
+    'calendar.subtitle': 'Veja seu histórico de estudos e registre sessões passadas',
+    'calendar.completed': 'Completo',
+    'calendar.partial': 'Parcial',
+    'calendar.noActivity': 'Sem atividade',
+    'calendar.today': 'Hoje',
+    'calendar.goals': 'metas',
+    'calendar.loggedCheckins': 'Check-ins registrados',
+    'calendar.noCheckins': 'Nenhum check-in neste dia',
+    'calendar.addMinutes': 'Adicionar minutos',
     
     // Dashboard
     'dashboard.title': 'Painel',
