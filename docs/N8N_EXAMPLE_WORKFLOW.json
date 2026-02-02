@@ -1,0 +1,139 @@
+{
+  "name": "StudyNice - New Goal Notification",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "new-goal",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook - New Goal",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "webhookId": "new-goal"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={\n  \"success\": true,\n  \"message\": \"Notification received\"\n}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      },
+      "id": "respond-to-webhook",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "content": "=🎯 **Nova Meta Criada no StudyNice!**\n\n👤 **Usuário:** {{ $json.user.full_name }}\n📚 **Meta:** {{ $json.goal.title }}\n🏷️ **Categoria:** {{ $json.goal.category || 'Sem categoria' }}\n⏱️ **Objetivo Diário:** {{ $json.goal.daily_target_minutes }} minutos\n🆔 **ID:** `{{ $json.goal.id }}`\n\n📅 Criada em: {{ $json.timestamp }}\n\nBoa sorte nos estudos! 🚀📖",
+        "channel": "studynice-notifications",
+        "webhookUrl": "https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN"
+      },
+      "id": "discord-notification",
+      "name": "Send Discord Notification",
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 1,
+      "position": [450, 200]
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@studynice.app",
+        "toEmail": "={{ $json.user.email || 'admin@studynice.app' }}",
+        "subject": "=Nova meta criada: {{ $json.goal.title }}",
+        "emailType": "html",
+        "message": "=<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }\n    .container { max-width: 600px; margin: 0 auto; padding: 20px; }\n    .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }\n    .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }\n    .goal-card { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }\n    .label { color: #666; font-size: 14px; margin-bottom: 5px; }\n    .value { font-size: 18px; font-weight: bold; color: #333; margin-bottom: 15px; }\n    .footer { text-align: center; color: #999; font-size: 12px; margin-top: 30px; }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"header\">\n      <h1>🎯 Nova Meta Criada!</h1>\n    </div>\n    <div class=\"content\">\n      <p>Olá, <strong>{{ $json.user.full_name }}</strong>!</p>\n      <p>Uma nova meta foi criada no seu StudyNice:</p>\n      \n      <div class=\"goal-card\">\n        <div class=\"label\">📚 Meta</div>\n        <div class=\"value\">{{ $json.goal.title }}</div>\n        \n        <div class=\"label\">🏷️ Categoria</div>\n        <div class=\"value\">{{ $json.goal.category || 'Sem categoria' }}</div>\n        \n        <div class=\"label\">⏱️ Objetivo Diário</div>\n        <div class=\"value\">{{ $json.goal.daily_target_minutes }} minutos</div>\n        \n        <div class=\"label\">📅 Criada em</div>\n        <div class=\"value\">{{ $json.timestamp }}</div>\n      </div>\n      \n      <p>Mantenha o foco e boa sorte nos seus estudos! 🚀</p>\n      \n      <div class=\"footer\">\n        <p>Esta é uma notificação automática do StudyNice</p>\n        <p>Timezone: {{ $json.user.timezone }}</p>\n      </div>\n    </div>\n  </div>\n</body>\n</html>"
+      },
+      "id": "email-notification",
+      "name": "Send Email Notification",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [450, 400],
+      "credentials": {
+        "smtp": {
+          "id": "1",
+          "name": "SMTP Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_CHAT_ID",
+        "text": "=🎯 *Nova Meta Criada!*\n\n👤 *Usuário:* {{ $json.user.full_name }}\n📚 *Meta:* {{ $json.goal.title }}\n🏷️ *Categoria:* {{ $json.goal.category || 'Sem categoria' }}\n⏱️ *Objetivo Diário:* {{ $json.goal.daily_target_minutes }} minutos\n\n📅 {{ $json.timestamp }}\n\nBoa sorte! 🚀",
+        "additionalFields": {
+          "parseMode": "Markdown"
+        }
+      },
+      "id": "telegram-notification",
+      "name": "Send Telegram Notification",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [450, 600],
+      "credentials": {
+        "telegramApi": {
+          "id": "2",
+          "name": "Telegram Account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook - New Goal": {
+      "main": [
+        [
+          {
+            "node": "Send Discord Notification",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Email Notification",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Telegram Notification",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "id": "studynice-new-goal-notification",
+  "meta": {
+    "instanceId": "your-instance-id"
+  },
+  "tags": [
+    {
+      "name": "StudyNice",
+      "id": "1"
+    },
+    {
+      "name": "Notifications",
+      "id": "2"
+    }
+  ]
+}
