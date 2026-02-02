@@ -1,21 +1,25 @@
 import { supabase } from "@/integrations/supabase/client";
 
-// Helper to get today's date in YYYY-MM-DD format
+// Helper to get today's date in YYYY-MM-DD format using browser timezone
 export function getTodayDate(): string {
-  return new Date().toISOString().split('T')[0];
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 // Helper to format date for display with locale support
 export function formatDate(date: string, locale: string = 'en'): string {
   const localeCode = locale === 'pt-BR' ? 'pt-BR' : 'en-US';
-  return new Date(date).toLocaleDateString(localeCode, {
+  return new Date(date + 'T00:00:00').toLocaleDateString(localeCode, {
     weekday: 'short',
     month: 'short',
     day: 'numeric',
   });
 }
 
-// Helper to get the last N days as date strings
+// Helper to get the last N days as date strings using browser timezone
 export function getLastNDays(n: number): string[] {
   const dates: string[] = [];
   const today = new Date();
@@ -23,7 +27,10 @@ export function getLastNDays(n: number): string[] {
   for (let i = n - 1; i >= 0; i--) {
     const date = new Date(today);
     date.setDate(date.getDate() - i);
-    dates.push(date.toISOString().split('T')[0]);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    dates.push(`${year}-${month}-${day}`);
   }
   
   return dates;

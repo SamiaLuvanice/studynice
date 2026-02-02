@@ -24,11 +24,17 @@ export function WeeklyChart({ data }: WeeklyChartProps) {
   
   const chartData = useMemo(() => {
     const locale = language === 'pt-BR' ? 'pt-BR' : 'en-US';
-    return data.map((item) => ({
-      ...item,
-      day: new Date(item.date).toLocaleDateString(locale, { weekday: 'short' }),
-      completed: item.minutes >= item.target,
-    }));
+    return data.map((item) => {
+      // Parse date string as local date (YYYY-MM-DD format)
+      const [year, month, day] = item.date.split('-').map(Number);
+      const date = new Date(year, month - 1, day);
+      
+      return {
+        ...item,
+        day: date.toLocaleDateString(locale, { weekday: 'short' }),
+        completed: item.minutes >= item.target,
+      };
+    });
   }, [data, language]);
 
   return (
