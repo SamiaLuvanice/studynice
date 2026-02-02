@@ -48,7 +48,7 @@ export default function Login() {
         if (error) {
           toast.error(error.message);
         } else {
-          toast.success(language === 'en' ? 'Account created! You can now sign in.' : 'Conta criada! Você já pode entrar.');
+          toast.success(t('auth.accountCreated'));
         }
       } else {
         const { error } = await signIn(formData.email, formData.password);
@@ -179,7 +179,7 @@ export default function Login() {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-card px-2 text-muted-foreground">
-                {language === 'en' ? 'Or continue with' : 'Ou continue com'}
+                {t('auth.orContinueWith')}
               </span>
             </div>
           </div>

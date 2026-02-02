@@ -10,6 +10,7 @@ const translations = {
     'nav.checkin': 'Check In',
     'nav.profile': 'Profile',
     'nav.calendar': 'Calendar',
+    'nav.timer': 'Timer',
     
     // Calendar
     'calendar.subtitle': 'View your study history and log past sessions',
@@ -21,7 +22,6 @@ const translations = {
     'calendar.loggedCheckins': 'Logged Check-ins',
     'calendar.noCheckins': 'No check-ins on this day',
     'calendar.addMinutes': 'Add minutes',
-    'nav.timer': 'Timer',
     
     // Dashboard
     'dashboard.title': 'Dashboard',
@@ -45,27 +45,48 @@ const translations = {
     
     // Goals
     'goals.title': 'My Goals',
+    'goals.subtitle': '{count} goals',
+    'goals.subtitleSingular': '{count} goal',
     'goals.create': 'Create Goal',
     'goals.edit': 'Edit Goal',
     'goals.delete': 'Delete',
     'goals.active': 'Active',
     'goals.inactive': 'Inactive',
+    'goals.paused': 'Paused',
     'goals.dailyTarget': 'Daily Target',
     'goals.minPerDay': 'min/day',
     'goals.noGoals': 'No goals yet',
     'goals.noGoalsDesc': 'Create your first study goal to start tracking your progress!',
+    'goals.todayProgress': "Today's progress",
+    'goals.deleteTitle': 'Delete Goal',
+    'goals.deleteConfirm': 'Are you sure you want to delete "{title}"? This will also delete all related check-ins. This action cannot be undone.',
     'goals.form.title': 'Title',
     'goals.form.titlePlaceholder': 'e.g., Learn Spanish',
     'goals.form.category': 'Category (optional)',
     'goals.form.categoryPlaceholder': 'e.g., Language, Programming',
     'goals.form.dailyTarget': 'Daily Target (minutes)',
+    'goals.form.dailyTargetHint': 'Recommended: 30-60 minutes for sustainable habits',
     'goals.form.isActive': 'Active Goal',
+    'goals.form.isActiveHint': "Inactive goals won't count towards your daily target",
     'goals.form.save': 'Save Goal',
     'goals.form.saving': 'Saving...',
     'goals.form.cancel': 'Cancel',
+    'goals.form.createSubtitle': 'Create a new study goal',
+    'goals.form.editSubtitle': 'Update your study goal',
     'goals.created': 'Goal created successfully!',
     'goals.updated': 'Goal updated successfully!',
     'goals.deleted': 'Goal deleted successfully!',
+    
+    // Categories
+    'category.mathematics': 'Mathematics',
+    'category.science': 'Science',
+    'category.languages': 'Languages',
+    'category.programming': 'Programming',
+    'category.arts': 'Arts',
+    'category.music': 'Music',
+    'category.history': 'History',
+    'category.literature': 'Literature',
+    'category.other': 'Other',
     
     // Check-in
     'checkin.title': "Today's Check-in",
@@ -141,6 +162,8 @@ const translations = {
     'auth.tagline': 'Build consistent study habits, track your progress, and achieve your learning goals.',
     'auth.signin': 'Sign in',
     'auth.getStarted': 'Get started',
+    'auth.accountCreated': 'Account created! You can now sign in.',
+    'auth.orContinueWith': 'Or continue with',
     
     // Landing Page
     'landing.heroTitle': 'Build a daily study streak that actually sticks.',
@@ -171,6 +194,12 @@ const translations = {
     'landing.footerPrivacy': 'Privacy',
     'landing.footerContact': 'Contact',
     'landing.footerGithub': 'GitHub',
+    // Hero mockup cards
+    'landing.heroCurrentStreak': 'Current Streak',
+    'landing.heroDays': 'days',
+    'landing.heroTodayProgress': "Today's Progress",
+    'landing.heroMinutesToday': 'minutes today',
+    'landing.heroTarget': 'target',
     
     // Common
     'common.loading': 'Loading...',
@@ -226,27 +255,48 @@ const translations = {
     
     // Goals
     'goals.title': 'Minhas Metas',
+    'goals.subtitle': '{count} metas',
+    'goals.subtitleSingular': '{count} meta',
     'goals.create': 'Criar Meta',
     'goals.edit': 'Editar Meta',
     'goals.delete': 'Excluir',
     'goals.active': 'Ativa',
     'goals.inactive': 'Inativa',
+    'goals.paused': 'Pausada',
     'goals.dailyTarget': 'Meta Diária',
     'goals.minPerDay': 'min/dia',
     'goals.noGoals': 'Nenhuma meta ainda',
     'goals.noGoalsDesc': 'Crie sua primeira meta de estudo para começar a acompanhar seu progresso!',
+    'goals.todayProgress': 'Progresso de hoje',
+    'goals.deleteTitle': 'Excluir Meta',
+    'goals.deleteConfirm': 'Tem certeza que deseja excluir "{title}"? Isso também excluirá todos os check-ins relacionados. Esta ação não pode ser desfeita.',
     'goals.form.title': 'Título',
     'goals.form.titlePlaceholder': 'ex.: Aprender Espanhol',
     'goals.form.category': 'Categoria (opcional)',
     'goals.form.categoryPlaceholder': 'ex.: Idiomas, Programação',
     'goals.form.dailyTarget': 'Meta Diária (minutos)',
+    'goals.form.dailyTargetHint': 'Recomendado: 30-60 minutos para hábitos sustentáveis',
     'goals.form.isActive': 'Meta Ativa',
+    'goals.form.isActiveHint': 'Metas inativas não contam para sua meta diária',
     'goals.form.save': 'Salvar Meta',
     'goals.form.saving': 'Salvando...',
     'goals.form.cancel': 'Cancelar',
+    'goals.form.createSubtitle': 'Crie uma nova meta de estudo',
+    'goals.form.editSubtitle': 'Atualize sua meta de estudo',
     'goals.created': 'Meta criada com sucesso!',
     'goals.updated': 'Meta atualizada com sucesso!',
     'goals.deleted': 'Meta excluída com sucesso!',
+    
+    // Categories
+    'category.mathematics': 'Matemática',
+    'category.science': 'Ciências',
+    'category.languages': 'Idiomas',
+    'category.programming': 'Programação',
+    'category.arts': 'Artes',
+    'category.music': 'Música',
+    'category.history': 'História',
+    'category.literature': 'Literatura',
+    'category.other': 'Outro',
     
     // Check-in
     'checkin.title': 'Check-in de Hoje',
@@ -322,6 +372,8 @@ const translations = {
     'auth.tagline': 'Construa hábitos de estudo consistentes, acompanhe seu progresso e alcance suas metas de aprendizado.',
     'auth.signin': 'Entrar',
     'auth.getStarted': 'Começar',
+    'auth.accountCreated': 'Conta criada! Você já pode entrar.',
+    'auth.orContinueWith': 'Ou continue com',
     
     // Landing Page
     'landing.heroTitle': 'Construa uma sequência de estudos diária que realmente funciona.',
@@ -352,6 +404,12 @@ const translations = {
     'landing.footerPrivacy': 'Privacidade',
     'landing.footerContact': 'Contato',
     'landing.footerGithub': 'GitHub',
+    // Hero mockup cards
+    'landing.heroCurrentStreak': 'Sequência Atual',
+    'landing.heroDays': 'dias',
+    'landing.heroTodayProgress': 'Progresso de Hoje',
+    'landing.heroMinutesToday': 'minutos hoje',
+    'landing.heroTarget': 'meta',
     
     // Common
     'common.loading': 'Carregando...',

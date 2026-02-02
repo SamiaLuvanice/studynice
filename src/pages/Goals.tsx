@@ -104,7 +104,10 @@ export default function Goals() {
           <div>
             <h1 className="text-2xl font-bold text-foreground">{t('goals.title')}</h1>
             <p className="text-muted-foreground">
-              {goals.length} {goals.length !== 1 ? 'goals' : 'goal'}
+              {goals.length !== 1 
+                ? t('goals.subtitle').replace('{count}', String(goals.length))
+                : t('goals.subtitleSingular').replace('{count}', String(goals.length))
+              }
             </p>
           </div>
           <Button asChild>

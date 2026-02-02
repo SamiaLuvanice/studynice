@@ -47,8 +47,8 @@ export function HeroSection() {
                     <Flame className="h-6 w-6 text-amber-500" />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Current Streak</p>
-                    <p className="text-2xl font-bold text-foreground">14 days</p>
+                    <p className="text-sm text-muted-foreground">{t('landing.heroCurrentStreak')}</p>
+                    <p className="text-2xl font-bold text-foreground">14 {t('landing.heroDays')}</p>
                   </div>
                 </div>
               </Card>
@@ -57,7 +57,7 @@ export function HeroSection() {
               <Card className="p-6 shadow-xl bg-card border">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-foreground">Today's Progress</h3>
+                    <h3 className="font-semibold text-foreground">{t('landing.heroTodayProgress')}</h3>
                     <span className="text-primary font-bold">85%</span>
                   </div>
                   <div className="h-3 bg-secondary rounded-full overflow-hidden">
@@ -66,11 +66,11 @@ export function HeroSection() {
                   <div className="grid grid-cols-2 gap-4 pt-2">
                     <div className="text-center p-3 bg-secondary/50 rounded-lg">
                       <p className="text-2xl font-bold text-foreground">51</p>
-                      <p className="text-xs text-muted-foreground">minutes today</p>
+                      <p className="text-xs text-muted-foreground">{t('landing.heroMinutesToday')}</p>
                     </div>
                     <div className="text-center p-3 bg-secondary/50 rounded-lg">
                       <p className="text-2xl font-bold text-foreground">60</p>
-                      <p className="text-xs text-muted-foreground">target</p>
+                      <p className="text-xs text-muted-foreground">{t('landing.heroTarget')}</p>
                     </div>
                   </div>
                 </div>
@@ -83,8 +83,8 @@ export function HeroSection() {
                     <Target className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-foreground">Learn Spanish</p>
-                    <p className="text-xs text-muted-foreground">30 min/day</p>
+                    <p className="text-sm font-medium text-foreground">{t('goals.form.titlePlaceholder').split(',')[0]}</p>
+                    <p className="text-xs text-muted-foreground">30 {t('goals.minPerDay')}</p>
                   </div>
                 </div>
               </Card>

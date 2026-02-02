@@ -18,17 +18,17 @@ import {
 } from '@/components/ui/select';
 import { toast } from 'sonner';
 
-const categories = [
-  'Mathematics',
-  'Science',
-  'Languages',
-  'Programming',
-  'Arts',
-  'Music',
-  'History',
-  'Literature',
-  'Other',
-];
+const categoryKeys = [
+  'category.mathematics',
+  'category.science',
+  'category.languages',
+  'category.programming',
+  'category.arts',
+  'category.music',
+  'category.history',
+  'category.literature',
+  'category.other',
+] as const;
 
 export default function GoalForm() {
   const { user } = useAuth();
@@ -146,10 +146,7 @@ export default function GoalForm() {
               {isEditing ? t('goals.edit') : t('goals.create')}
             </h1>
             <p className="text-muted-foreground">
-              {isEditing 
-                ? (language === 'en' ? 'Update your study goal' : 'Atualize sua meta de estudo')
-                : (language === 'en' ? 'Create a new study goal' : 'Crie uma nova meta de estudo')
-              }
+              {isEditing ? t('goals.form.editSubtitle') : t('goals.form.createSubtitle')}
             </p>
           </div>
         </div>
@@ -187,10 +184,7 @@ export default function GoalForm() {
                 required
               />
               <p className="text-xs text-muted-foreground">
-                {language === 'en' 
-                  ? 'Recommended: 30-60 minutes for sustainable habits'
-                  : 'Recomendado: 30-60 minutos para hábitos sustentáveis'
-                }
+                {t('goals.form.dailyTargetHint')}
               </p>
             </div>
 
@@ -202,13 +196,13 @@ export default function GoalForm() {
                   setFormData({ ...formData, category: value })
                 }
               >
-                <SelectTrigger>
+              <SelectTrigger>
                   <SelectValue placeholder={t('goals.form.categoryPlaceholder')} />
                 </SelectTrigger>
                 <SelectContent>
-                  {categories.map((cat) => (
-                    <SelectItem key={cat} value={cat}>
-                      {cat}
+                  {categoryKeys.map((catKey) => (
+                    <SelectItem key={catKey} value={t(catKey)}>
+                      {t(catKey)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -221,9 +215,7 @@ export default function GoalForm() {
                   {t('goals.form.isActive')}
                 </Label>
                 <p className="text-sm text-muted-foreground">
-                  {language === 'en'
-                    ? "Inactive goals won't count towards your daily target"
-                    : 'Metas inativas não contam para sua meta diária'
+                  {t('goals.form.isActiveHint')
                   }
                 </p>
               </div>

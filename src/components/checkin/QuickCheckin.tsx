@@ -123,7 +123,7 @@ export function QuickCheckin({
               animatingButton === amount && "celebrate bg-primary text-primary-foreground"
             )}
           >
-            +{amount} min
+            +{amount} {t('checkin.min')}
           </button>
         ))}
         <button
