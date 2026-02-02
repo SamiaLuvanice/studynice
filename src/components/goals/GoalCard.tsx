@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface GoalCardProps {
   id: string;
@@ -40,6 +41,7 @@ export function GoalCard({
   todayMinutes = 0,
   onDelete,
 }: GoalCardProps) {
+  const { t } = useLanguage();
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const progress = Math.min((todayMinutes / dailyTargetMinutes) * 100, 100);
   const isCompleted = todayMinutes >= dailyTargetMinutes;
@@ -69,7 +71,7 @@ export function GoalCard({
               <div className="flex items-center gap-2 mt-1">
                 <Clock className="h-3.5 w-3.5 text-muted-foreground" />
                 <span className="text-sm text-muted-foreground">
-                  {dailyTargetMinutes} min/day
+                  {dailyTargetMinutes} {t('goals.minPerDay')}
                 </span>
                 {category && (
                   <Badge variant="secondary" className="text-xs">
@@ -78,7 +80,7 @@ export function GoalCard({
                 )}
                 {!isActive && (
                   <Badge variant="outline" className="text-xs">
-                    Paused
+                    {t('goals.paused')}
                   </Badge>
                 )}
               </div>
@@ -95,7 +97,7 @@ export function GoalCard({
               <DropdownMenuItem asChild>
                 <Link to={`/goals/${id}`} className="flex items-center gap-2">
                   <Edit2 className="h-4 w-4" />
-                  Edit
+                  {t('common.edit')}
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem
@@ -103,7 +105,7 @@ export function GoalCard({
                 className="text-destructive focus:text-destructive"
               >
                 <Trash2 className="h-4 w-4 mr-2" />
-                Delete
+                {t('common.delete')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -112,9 +114,9 @@ export function GoalCard({
         {/* Progress bar */}
         <div className="mt-4">
           <div className="flex items-center justify-between text-sm mb-2">
-            <span className="text-muted-foreground">Today's progress</span>
+            <span className="text-muted-foreground">{t('goals.todayProgress')}</span>
             <span className={cn("font-medium", isCompleted && "text-primary")}>
-              {todayMinutes} / {dailyTargetMinutes} min
+              {todayMinutes} / {dailyTargetMinutes} {t('checkin.min')}
             </span>
           </div>
           <div className="progress-bar">
@@ -132,19 +134,18 @@ export function GoalCard({
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Goal</AlertDialogTitle>
+            <AlertDialogTitle>{t('goals.deleteTitle')}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete "{title}"? This will also delete all
-              related check-ins. This action cannot be undone.
+              {t('goals.deleteConfirm').replace('{title}', title)}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => onDelete(id)}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              Delete
+              {t('common.delete')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
