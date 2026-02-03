@@ -1,0 +1,46 @@
+<div style="font-family: Arial, sans-serif; line-height: 1.6; max-width: 600px; margin: 0 auto;">
+  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding: 20px; background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); border-radius: 10px;">
+    <div style="background: white; padding: 8px; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+      <span style="font-size: 32px;">🦉</span>
+    </div>
+    <span style="font-size: 24px; font-weight: 700; color: white;">StudyNice</span>
+  </div>
+
+  <div style="padding: 20px; background: #f9fafb; border-radius: 10px;">
+    <h2 style="color: #333; margin-top: 0;">Parabéns pela sua nova meta! 🎉</h2>
+    
+    <p style="color: #555; font-size: 16px;">
+      Você acabou de registrar <strong style="color: #ec4899;">{{ $json.body.goal.title }}</strong> no StudyNice. Cada passo conta, e esse é um grande começo!
+    </p>
+
+    <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #ec4899;">
+      <h3 style="margin-top: 0; color: #ec4899;">📊 Detalhes da Meta</h3>
+      <ul style="color: #555; padding-left: 20px; margin-bottom: 0;">
+        <li style="margin-bottom: 8px;"><strong>Categoria:</strong> {{ $json.body.goal.category }}</li>
+        <li style="margin-bottom: 8px;"><strong>Objetivo Diário:</strong> {{ $json.body.goal.daily_target_minutes }} minutos</li>
+        <li><strong>Data de Criação:</strong> {{ $json.body.goal.created_at }}</li>
+      </ul>
+    </div>
+
+    <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 20px 0;">
+      <p style="margin: 0; color: #92400e; font-size: 14px;">
+        💡 <strong>Dica:</strong> Que tal dar o primeiro passo hoje? Cumprir suas metas diárias mantém o ritmo e aproxima você do seu objetivo.
+      </p>
+    </div>
+
+    <p style="color: #555; font-size: 16px;">
+      <strong>Você consegue!</strong> Vamos em frente, um dia de cada vez. 💪
+    </p>
+
+    <div style="text-align: center; margin: 30px 0;">
+      <a href="https://studynice.app/goals" style="display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">Ver Minhas Metas</a>
+    </div>
+
+    <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
+
+    <p style="color: #999; font-size: 12px; text-align: center;">
+      StudyNice - Sua jornada de aprendizado começa aqui 🦉<br>
+      Continue assim! Cada minuto de estudo é um investimento no seu futuro.
+    </p>
+  </div>
+</div>

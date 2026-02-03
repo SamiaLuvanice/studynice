@@ -1,0 +1,114 @@
+{
+  "name": "StudyNice - Welcome Email",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "welcome",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "a1b2c3d4-5678-4e9f-0123-456789abcdef",
+      "name": "Webhook - New User",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -208,
+        112
+      ],
+      "webhookId": "welcome"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={\n  \"success\": true,\n  \"message\": \"Welcome email sent\"\n}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      },
+      "id": "b2c3d4e5-6789-4f0a-1234-567890abcdef",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        208,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@studynice.app",
+        "toEmail": "={{ $json.body.user.email }}",
+        "subject": "=Bem-vindo(a) ao StudyNice, {{ $json.body.user.full_name }}! 🦉",
+        "emailFormat": "html",
+        "html": "=<div style=\"font-family: Arial, sans-serif; line-height: 1.6; max-width: 600px; margin: 0 auto;\">\n  <div style=\"display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding: 20px; background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); border-radius: 10px;\">\n    <div style=\"background: white; padding: 8px; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;\">\n      <span style=\"font-size: 32px;\">🦉</span>\n    </div>\n    <span style=\"font-size: 24px; font-weight: 700; color: white;\">StudyNice</span>\n  </div>\n\n  <div style=\"padding: 20px; background: #f9fafb; border-radius: 10px;\">\n    <h2 style=\"color: #333; margin-top: 0;\">Olá, {{ $json.body.user.full_name }}! 👋</h2>\n    \n    <p style=\"color: #555; font-size: 16px;\">\n      Seja muito bem-vindo(a) ao <strong>StudyNice</strong>! Estamos muito felizes em ter você aqui.\n    </p>\n\n    <p style=\"color: #555; font-size: 16px;\">\n      O StudyNice é sua plataforma completa para gerenciar estudos, acompanhar progresso e alcançar seus objetivos de aprendizado. 🎯\n    </p>\n\n    <div style=\"background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #ec4899;\">\n      <h3 style=\"margin-top: 0; color: #ec4899;\">🚀 Próximos Passos</h3>\n      <ol style=\"color: #555; padding-left: 20px;\">\n        <li style=\"margin-bottom: 10px;\">Crie sua primeira meta de estudo</li>\n        <li style=\"margin-bottom: 10px;\">Defina seu objetivo diário em minutos</li>\n        <li style=\"margin-bottom: 10px;\">Use o timer Pomodoro para sessões focadas</li>\n        <li style=\"margin-bottom: 10px;\">Faça check-ins diários e construa sua sequência! 🔥</li>\n      </ol>\n    </div>\n\n    <div style=\"background: #fef3c7; padding: 15px; border-radius: 8px; margin: 20px 0;\">\n      <p style=\"margin: 0; color: #92400e; font-size: 14px;\">\n        💡 <strong>Dica:</strong> Estudos mostram que apenas 15-30 minutos diários de estudo consistente são mais eficazes que sessões longas e irregulares.\n      </p>\n    </div>\n\n    <p style=\"color: #555; font-size: 16px;\">\n      Estamos aqui para apoiar sua jornada de aprendizado. Vamos juntos! 💪\n    </p>\n\n    <div style=\"text-align: center; margin: 30px 0;\">\n      <a href=\"https://studynice.app/dashboard\" style=\"display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;\">Começar Agora</a>\n    </div>\n\n    <hr style=\"border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;\">\n\n    <p style=\"color: #999; font-size: 12px; text-align: center;\">\n      StudyNice - Sua jornada de aprendizado começa aqui 🦉<br>\n      Se você tiver dúvidas, responda este email. Estamos aqui para ajudar!\n    </p>\n  </div>\n</div>",
+        "options": {}
+      },
+      "id": "c3d4e5f6-7890-4a1b-2345-67890abcdef0",
+      "name": "Send Welcome Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        0,
+        208
+      ],
+      "webhookId": "f1a2b3c4-d5e6-4f78-9012-34567890abcd",
+      "credentials": {
+        "smtp": {
+          "id": "D8LyBSejYRn2Q5GJ",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook - New User": {
+      "main": [
+        [
+          {
+            "node": "Send Welcome Email",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "welcome-email-v1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "062122f0866f3f5becca01f1bfc388382fda06e5ff3fe48ff4158f527a13ec29"
+  },
+  "tags": [
+    {
+      "id": "92TLFqdkvcwxBOxK",
+      "name": "Notifications"
+    },
+    {
+      "id": "GK4x20p18bQNb0X6",
+      "name": "StudyNice"
+    },
+    {
+      "id": "welcome-tag-001",
+      "name": "Welcome"
+    }
+  ]
+}
