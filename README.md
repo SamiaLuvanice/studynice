@@ -367,7 +367,7 @@ Quando um usuário cria uma conta, um webhook é disparado automaticamente:
 }
 ```
 
-**Workflow:** `docs/StudyNice - Welcome Email.json`  
+**Workflow:** `docs/StudyNice - Welcome Email.json`
 **Documentação:** [`docs/WELCOME_EMAIL_SETUP.md`](docs/WELCOME_EMAIL_SETUP.md)
 
 ---
@@ -396,7 +396,7 @@ Quando um usuário cria uma nova meta:
 }
 ```
 
-**Template:** `docs/new-goal-email-template.html`  
+**Template:** `docs/new-goal-email-template.html`
 **Documentação:** [`docs/N8N_INTEGRATION.md`](docs/N8N_INTEGRATION.md)
 
 ---
@@ -454,11 +454,10 @@ Arquivos de teste estão em `src/test/`
 
 ## 🌐 Deploy
 
-### Opção 1: Lovable (Recomendado)
-1. Acesse o [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID)
-2. Clique em **Share → Publish**
+### Produção (Vercel)
+- URL: https://studynice.vercel.app/
 
-### Opção 2: Vercel/Netlify
+### Alternativa: Vercel/Netlify (manual)
 ```bash
 # Build
 npm run build
