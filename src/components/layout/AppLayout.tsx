@@ -51,7 +51,9 @@ export function AppLayout({ children }: AppLayoutProps) {
           <nav className="hidden md:flex items-center gap-1">
             {navItemsConfig.map((item) => {
               const Icon = item.icon;
-              const isActive = location.pathname === item.path;
+              const isActive =
+                location.pathname === item.path ||
+                location.pathname.startsWith(`${item.path}/`);
               return (
                 <Link
                   key={item.path}
@@ -124,7 +126,9 @@ export function AppLayout({ children }: AppLayoutProps) {
         <div className="flex items-center justify-around py-2">
           {navItemsConfig.map((item) => {
             const Icon = item.icon;
-            const isActive = location.pathname === item.path;
+            const isActive =
+              location.pathname === item.path ||
+              location.pathname.startsWith(`${item.path}/`);
             return (
               <Link
                 key={item.path}

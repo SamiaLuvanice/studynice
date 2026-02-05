@@ -68,10 +68,16 @@ export default function GoalForm() {
         return;
       }
 
+      const normalizedCategory = data.category
+        ? categoryKeys.includes(data.category as (typeof categoryKeys)[number])
+          ? data.category
+          : categoryKeys.find((key) => t(key) === data.category) || ''
+        : '';
+
       setFormData({
         title: data.title,
         daily_target_minutes: data.daily_target_minutes,
-        category: data.category || '',
+        category: normalizedCategory,
         is_active: data.is_active,
       });
     } catch (error) {
@@ -201,7 +207,7 @@ export default function GoalForm() {
                 </SelectTrigger>
                 <SelectContent>
                   {categoryKeys.map((catKey) => (
-                    <SelectItem key={catKey} value={t(catKey)}>
+                    <SelectItem key={catKey} value={catKey}>
                       {t(catKey)}
                     </SelectItem>
                   ))}

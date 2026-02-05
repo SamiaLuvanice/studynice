@@ -1,0 +1,115 @@
+{
+  "name": "StudyNice - New Goal Notification",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "new-goal",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "8c147bec-9262-4b1c-9152-dca45372a11a",
+      "name": "Webhook - New Goal",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -208,
+        112
+      ],
+      "webhookId": "new-goal"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={\n  \"success\": true,\n  \"message\": \"Notification received\"\n}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      },
+      "id": "1ff268f6-62f0-417e-8a3c-d3849577e187",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        208,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@studynice.app",
+        "toEmail": "={{ $json.body.user.email }}",
+        "subject": "=Nova meta criada: {{ $json.body.goal.title }}",
+        "emailFormat": "html",
+        "html": "=<div style=\"font-family: Arial, sans-serif; line-height: 1.6; max-width: 600px; margin: 0 auto;\">\n  <div style=\"display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding: 20px; background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); border-radius: 10px;\">\n    <div style=\"background: white; padding: 8px; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;\">\n      <span style=\"font-size: 32px;\">🦉</span>\n    </div>\n    <span style=\"font-size: 24px; font-weight: 700; color: white;\">StudyNice</span>\n  </div>\n\n  <div style=\"padding: 20px; background: #f9fafb; border-radius: 10px;\">\n    <h2 style=\"color: #333; margin-top: 0;\">Parabéns pela sua nova meta! 🎉</h2>\n    \n    <p style=\"color: #555; font-size: 16px;\">\n      Você acabou de registrar <strong style=\"color: #ec4899;\">{{ $json.body.goal.title }}</strong> no StudyNice. Cada passo conta, e esse é um grande começo!\n    </p>\n\n    <div style=\"background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #ec4899;\">\n      <h3 style=\"margin-top: 0; color: #ec4899;\">📊 Detalhes da Meta</h3>\n      <ul style=\"color: #555; padding-left: 20px; margin-bottom: 0;\">\n        <li style=\"margin-bottom: 8px;\"><strong>Categoria:</strong> {{ $json.body.goal.category }}</li>\n        <li style=\"margin-bottom: 8px;\"><strong>Objetivo Diário:</strong> {{ $json.body.goal.daily_target_minutes }} minutos</li>\n        <li><strong>Data de Criação:</strong> {{ $json.body.goal.created_at }}</li>\n      </ul>\n    </div>\n\n    <div style=\"background: #fef3c7; padding: 15px; border-radius: 8px; margin: 20px 0;\">\n      <p style=\"margin: 0; color: #92400e; font-size: 14px;\">\n        💡 <strong>Dica:</strong> Que tal dar o primeiro passo hoje? Cumprir suas metas diárias mantém o ritmo e aproxima você do seu objetivo.\n      </p>\n    </div>\n\n    <p style=\"color: #555; font-size: 16px;\">\n      <strong>Você consegue!</strong> Vamos em frente, um dia de cada vez. 💪\n    </p>\n\n    <div style=\"text-align: center; margin: 30px 0;\">\n      <a href=\"https://studynice.app/goals\" style=\"display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;\">Ver Minhas Metas</a>\n    </div>\n\n    <hr style=\"border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;\">\n\n    <p style=\"color: #999; font-size: 12px; text-align: center;\">\n      StudyNice - Sua jornada de aprendizado começa aqui 🦉<br>\n      Continue assim! Cada minuto de estudo é um investimento no seu futuro.\n    </p>\n  </div>\n</div>\n",
+        "options": {}
+      },
+      "id": "49fd8c56-eb9a-46b8-832b-819ce5a3c099",
+      "name": "Send Email Notification",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        0,
+        208
+      ],
+      "webhookId": "e995a6a4-bab0-4209-83d7-7e6f94064fed",
+      "credentials": {
+        "smtp": {
+          "id": "D8LyBSejYRn2Q5GJ",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook - New Goal": {
+      "main": [
+        [
+          {
+            "node": "Send Email Notification",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "a3442282-fe71-4719-aa69-556367b01a0f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "062122f0866f3f5becca01f1bfc388382fda06e5ff3fe48ff4158f527a13ec29"
+  },
+  "id": "93krzF_6ZeB2adF9NPKti",
+  "tags": [
+    {
+      "updatedAt": "2026-02-02T19:04:04.376Z",
+      "createdAt": "2026-02-02T19:04:04.376Z",
+      "id": "92TLFqdkvcwxBOxK",
+      "name": "Notifications"
+    },
+    {
+      "updatedAt": "2026-02-02T19:04:04.436Z",
+      "createdAt": "2026-02-02T19:04:04.436Z",
+      "id": "GK4x20p18bQNb0X6",
+      "name": "StudyNice"
+    }
+  ]
+}

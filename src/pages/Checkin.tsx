@@ -8,7 +8,7 @@ import { AppLayout } from '@/components/layout/AppLayout';
 import { QuickCheckin } from '@/components/checkin/QuickCheckin';
 import { DailyProgress } from '@/components/dashboard/DailyProgress';
 import { Button } from '@/components/ui/button';
-import { getTodayDate, updateDailyStats, formatDate } from '@/lib/supabase-helpers';
+import { getTodayDate, formatDate } from '@/lib/supabase-helpers';
 
 interface Goal {
   id: string;
@@ -101,7 +101,13 @@ export default function Checkin() {
     }
 
     // Update daily stats
-    await updateDailyStats(user.id, today);
+    await supabase.rpc('recalculate_daily_stats', {
+      p_user_id: user.id,
+      p_date: today,
+    });
+    await supabase.rpc('recalculate_user_stats', {
+      p_user_id: user.id,
+    });
 
     // Update local state
     setGoals((prev) =>

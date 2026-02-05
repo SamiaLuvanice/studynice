@@ -214,7 +214,7 @@ curl -X POST https://your-n8n.com/webhook/new-goal \
     "goal": {
       "id": "test-123",
       "title": "Teste de Email",
-      "category": "Teste",
+      "category": "category.other",
       "daily_target_minutes": 30,
       "created_at": "2026-02-02T10:00:00Z"
     },
@@ -227,6 +227,8 @@ curl -X POST https://your-n8n.com/webhook/new-goal \
     "timestamp": "2026-02-02T10:00:00Z"
   }'
 ```
+
+> Observação: `goal.category` usa chaves de i18n (ex: `category.programming`, `category.other`).
 
 ---
 

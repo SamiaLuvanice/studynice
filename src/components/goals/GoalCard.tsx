@@ -45,6 +45,11 @@ export function GoalCard({
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const progress = Math.min((todayMinutes / dailyTargetMinutes) * 100, 100);
   const isCompleted = todayMinutes >= dailyTargetMinutes;
+  const categoryLabel = category
+    ? category.startsWith('category.')
+      ? t(category as any)
+      : category
+    : '';
 
   return (
     <>
@@ -73,9 +78,9 @@ export function GoalCard({
                 <span className="text-sm text-muted-foreground">
                   {dailyTargetMinutes} {t('goals.minPerDay')}
                 </span>
-                {category && (
+                {categoryLabel && (
                   <Badge variant="secondary" className="text-xs">
-                    {category}
+                    {categoryLabel}
                   </Badge>
                 )}
                 {!isActive && (

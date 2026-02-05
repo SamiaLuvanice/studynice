@@ -51,7 +51,7 @@ supabase db push
     "goal": {
       "id": "uuid",
       "title": "Estudar JavaScript",
-      "category": "Programming",
+      "category": "category.programming",
       "daily_target_minutes": 60,
       "created_at": "2026-02-02T10:00:00Z"
     },
@@ -143,7 +143,7 @@ Opção 2 - Via interface (criar uma página admin no seu app)
   "goal": {
     "id": "123e4567-e89b-12d3-a456-426614174000",
     "title": "Estudar React Avançado",
-    "category": "Programação",
+    "category": "category.programming",
     "daily_target_minutes": 90,
     "created_at": "2026-02-02T14:30:00Z"
   },
@@ -162,6 +162,9 @@ Opção 2 - Via interface (criar uma página admin no seu app)
 - Use HTTPS para os webhooks do n8n
 - Considere adicionar autenticação (header token) no webhook
 - Não exponha dados sensíveis nas notificações
+
+> Dica: o campo `goal.category` é salvo como chave de internacionalização (ex: `category.programming`).
+> Se quiser exibir um rótulo amigável, faça um mapeamento no n8n ou use um Set/Function node.
 
 ## 🚀 Próximos Passos
 

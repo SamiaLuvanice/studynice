@@ -175,6 +175,15 @@ const Timer = () => {
           });
       }
 
+      // Recalculate daily and user stats
+      await supabase.rpc('recalculate_daily_stats', {
+        p_user_id: user.id,
+        p_date: today,
+      });
+      await supabase.rpc('recalculate_user_stats', {
+        p_user_id: user.id,
+      });
+
       toast({
         title: t('timer.success'),
         description: `${minutes} ${t('timer.minutes')}`,

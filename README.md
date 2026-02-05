@@ -47,7 +47,7 @@ O **StudyNice** permite que usuários:
 ### ⏱️ Timer Pomodoro
 - Timer configurável para sessões de estudo
 - Pausar, retomar e finalizar sessões
-- Salvamento automático de tempo estudado
+- Salvamento manual do tempo estudado ao finalizar
 
 ### 📊 Dashboard
 - Visão geral do progresso do dia
@@ -62,8 +62,7 @@ O **StudyNice** permite que usuários:
 
 ### 👤 Perfil
 - Gerenciamento de dados pessoais
-- Configuração de timezone
-- Avatar customizável
+- Atualização de nome
 
 ## 🛠️ Tecnologias
 
@@ -382,7 +381,7 @@ Quando um usuário cria uma nova meta:
   "goal": {
     "id": "uuid",
     "title": "Estudar JavaScript",
-    "category": "Programming",
+    "category": "category.programming",
     "daily_target_minutes": 60,
     "created_at": "2026-02-03T15:00:00Z"
   },
@@ -397,6 +396,7 @@ Quando um usuário cria uma nova meta:
 ```
 
 **Template:** `docs/new-goal-email-template.html`
+**Workflow:** `docs/StudyNice - New Goal Notification.json`
 **Documentação:** [`docs/N8N_INTEGRATION.md`](docs/N8N_INTEGRATION.md)
 
 ---
@@ -493,4 +493,4 @@ Este projeto foi desenvolvido com [Lovable](https://lovable.dev)
 
 ---
 
-**Desenvolvido com 💜 usando Lovable**
+
