@@ -14,6 +14,8 @@
 - [Integração N8N](#integração-n8n)
 - [Scripts Disponíveis](#scripts-disponíveis)
 - [Testes](#testes)
+- [Customização](#customização)
+- [Implementações Futuras](#implementações-futuras-roadmap)
 
 ---
 
@@ -478,6 +480,87 @@ Os temas são gerenciados via `ThemeContext` com suporte a:
 ### Internacionalização
 Idiomas suportados: PT-BR, EN
 Gerenciado via `LanguageContext`
+
+## 🚀 Implementações Futuras (Roadmap)
+
+Aqui estão as melhorias e funcionalidades previstas para versões futuras do StudyNice:
+
+### 📅 Metas com Dias Específicos da Semana
+- **Descrição:** Permitir que usuários selecionem quais dias da semana (segunda a domingo) cada meta está ativa
+- **Benefício:** Melhor flexibilidade para metas específicas (ex: "estudar JavaScript apenas seg/qua/sex")
+- **Modificações necessárias:**
+  - Adicionar campo `days_of_week` (JSONB/ARRAY) na tabela `goals`
+  - Atualizar formulário de criação/edição de metas com seletor de dias
+  - Ajustar cálculos de progresso para considerar dias selecionados
+
+### 🎵 Música Ambiente e Sons de Fundo
+- **Descrição:** Integrar player de música ambiente durante sessões de estudo com o timer Pomodoro
+- **Funcionalidades:**
+  - Acesso a bibliotecas de música livre (ex: Spotify API, YouTube Music, Freepik Music)
+  - Categorias: Lo-fi, Frente Wave, Piano, Chuva, Café, etc.
+  - Controle de volume independente
+  - Salvar músicas favoritas
+  - Som de alerta personalizável ao final da sessão
+- **Tecnologias sugeridas:** Web Audio API, Howler.js, integração com APIs de música
+
+### 👥 Recursos Sociais
+- **Competição com Amigos:** Sistema de desafios e competições entre usuários
+- **Rankings Semanais/Mensais:** Leaderboards por minutos estudados ou streaks
+- **Compartilhamento de Progresso:** Integração com Discord, WhatsApp para compartilhar conquistas
+- **Grupos de Estudo:** Criar grupos de estudo privados com objetivos compartilhados
+
+### 📱 Progressive Web App (PWA)
+- **Offline First:** Funcionar offline com sincronização quando conectado
+- **Notificações Push:** Lembretes de metas e motivação em tempo real
+- **Instalável:** Instalar como app nativo na tela inicial
+- **Sincronização em Background:** Atualizar dados em segundo plano
+
+### 📊 Estatísticas Avançadas
+- **Análise de Padrões:** Identificar horários mais produtivos
+- **Comparativo Semanal/Mensal:** Gráficos comparativos de desempenho
+- **Previsões:** Estimativas de quando alcançar metas baseado em padrão atual
+- **Relatórios em PDF:** Exportar progresso mensal/trimestral com gráficos
+- **Heatmap de Produtividade:** Visualizar em qual dia/hora você é mais produtivo
+
+### 🎖️ Sistema de Gamificação
+- **Badges e Achievements:** Conquistas por milestones (10 dias de streak, 100 horas estudadas, etc.)
+- **Níveis:** Sistema de progressão com levels baseado em experiência
+- **Pontos de XP:** Ganhar XP com cada check-in e sessão completada
+- **Recompensas:** Desbloquear temas, sons e músicas com XP
+
+### 🔔 Notificações Inteligentes
+- **Lembretes Personalizáveis:** Definir horários específicos para lembretes de metas
+- **Notificações Smart:** Ajustar frequência de lembretes conforme progresso do usuário
+- **Notificações por Canal:** Email, Push, Discord, Telegram, SMS (via N8N)
+
+### 🌍 Integrações com Calendários
+- **Google Calendar Sync:** Sincronizar sessões de estudo no Google Calendar
+- **Outlook Integration:** Integração com Microsoft Outlook
+- **iCal Export:** Exportar calendário em formato iCal
+- **Apple Calendar:** Sincronização nativa com Calendário do iOS
+
+### 🎯 Modo Foco Avançado
+- **Bloqueio de Distrações:** Bloqueio de websites/apps durante sessão (extensão do navegador)
+- **Modo "Não Perturbe":** Silenciar notificações durante sessão
+- **Integração Pomodoro Avançada:** Ciclos de foco/descanso customizáveis (ex: 25min foco + 5min pausa)
+- **Detecção de Ando:** Pausar automaticamente quando usuário sair da tela
+
+### 💾 Exportação de Dados
+- **Backup de Dados:** Exportar dados em JSON ou CSV
+- **Importação:** Importar dados de outras aplicações
+- **Data Portability:** Facilitar transferência de dados entre plataformas
+
+### 🎨 Temas e Personalização Avançada
+- **Temas Customizáveis:** Editor de temas para cores personnalizadas
+- **Widgets na Dashboard:** Reordenar e customizar widgets
+- **Ícones Personalizados:** Diferentes ícones para categorias de metas
+
+### 📱 App Mobile Nativo
+- **React Native App:** Versão nativa para iOS e Android
+- **Offline Sync:** Funcionar completamente offline
+- **Notificações Locais:** Alertas nativos do sistema operacional
+
+---
 
 ## 🤝 Contribuindo
 
